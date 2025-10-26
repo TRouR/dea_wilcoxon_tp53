@@ -74,34 +74,6 @@ res$padj_left  <- p.adjust(res$p_left,  method = "BH")
 res$padj_right <- p.adjust(res$p_right, method = "BH")
 res$padj_two   <- p.adjust(res$p_two,   method = "BH")
 
-# # BH with FULL UNIVERSE padding
-# # p-vectors for the genes you tested
-# p_left_named  <- setNames(res$p_left,  rownames(expr_f))
-# p_right_named <- setNames(res$p_right, rownames(expr_f))
-# p_two_named   <- setNames(res$p_two,   rownames(expr_f))
-# 
-# # helper: fill missing genes with p=1 so BH runs over ALL genes
-# pad_vec <- function(p_named, all_ids) {
-#   v <- rep(1, length(all_ids))
-#   names(v) <- all_ids
-#   overlap <- intersect(names(p_named), all_ids)
-#   v[overlap] <- p_named[overlap]
-#   v
-# }
-# 
-# pL_all <- pad_vec(p_left_named,  all_genes)
-# pR_all <- pad_vec(p_right_named, all_genes)
-# pT_all <- pad_vec(p_two_named,   all_genes)
-# 
-# padj_left_all  <- p.adjust(pL_all, method = "BH")
-# padj_right_all <- p.adjust(pR_all, method = "BH")
-# padj_two_all   <- p.adjust(pT_all, method = "BH")
-# 
-# # map adjusted p's back to tested genes
-# res$padj_left  <- padj_left_all [rownames(expr_f)]
-# res$padj_right <- padj_right_all[rownames(expr_f)]
-# res$padj_two   <- padj_two_all  [rownames(expr_f)]
-
 # Tidy output
 out <- data.frame(
   gene = rownames(expr_f),
