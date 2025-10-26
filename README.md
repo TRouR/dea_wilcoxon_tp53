@@ -11,7 +11,6 @@ A compact, reproducible pipeline to:
 
 ### R / Differential Expression
 - **`DiffExprAnalysis.R`** – Wilcoxon rank-sum per gene, left/right/two-sided p, **BH over tested genes**, filters: ≥3 non-NA per group & non-constant, writes `DEA_results_tails.csv`.  
-  *Also includes a commented block showing how to run BH over the **full universe** by padding untestable genes with p=1.*
 
 ### Python / Data prep & figures
 - **`data_processing.py`** – converts the Gitools `.tdm` + `Target.csv` TP53 status into a **genes×samples** matrix (`exprs.csv`) with columns renamed `Mut*` and `Norm*`.  
@@ -63,7 +62,7 @@ source("DiffExprAnalysis.R")
 - **Effect size**:  
   - `med_diff` = median(Mut) − median(WT) (log2 scale).  
   - `auc` = U / (n₁·n₂) ≈ P(Mut > WT).  
-- **FDR**: default is **BH over tested genes**. Optional block demonstrates BH over **all genes** by padding untestable rows with p=1.
+- **FDR**: default is **BH over tested genes**.
 
 ### 3) Figures
 
@@ -99,8 +98,8 @@ python barplot.py
 - **Same statistical test**: two-sample MWW, per-gene NAs are discarded.  
 - **Same eligibility rule**: gene tested only if **≥3** non-missing values in **each** group.  
 - **Outputs**: left (`Mut < WT`), right (`Mut > WT`), and two-sided p-values.  
-- **R vs Gitools differences**: expect **minor numeric jitter** from implementation details (NA/constant-row filtering, tie/continuity corrections in Wilcoxon, two-sided construction, and BH ordering).  
-- **Why “BH over tested genes” (default)?** It controls FDR on the set of **actual decisions** and avoids over-penalizing by including untestable genes.
+- **R vs Gitools differences**: may expect **minor numeric jitter** from implementation details (NA/constant-row filtering, tie/continuity corrections in Wilcoxon, two-sided construction, and BH ordering).  
+- **BH over tested genes**: It controls FDR on the set of **actual decisions** and avoids over-penalizing by including untestable genes.
 
 ---
 
